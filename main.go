@@ -3,17 +3,17 @@ package main
 import (
 	"fmt"
 	"log"
-	"http/net"
+	"net/http"
 )
 
 func formHandler(w http.ResponseWriter,r *http.Request){
 	if err:= r.ParseForm(); err!=nil{
-		fmt.FPrintf(w,"ParseForm() err: %v",err)
+		fmt.Fprintf(w,"ParseForm() err: %v",err)
 		return
 	}
 	fmt.Fprintf(w,"POST request successfull")
 	name := r.FormValue("name")
-	address := r.FormValue("Address")
+	address := r.FormValue("Agitddress")
 	fmt.Fprintf(w,"Name = %s\n",name)
 	fmt.Fprintf(w,"Address = %s\n",address)
 }
@@ -27,7 +27,7 @@ func helloHandler(w http.ResponseWriter,r *http.Request){
 		http.Error(w,"Method is not supported",http.StatusNotFound)
 		return
 	}
-	fmt.FPrintf(w,"Hello Handler Function")
+	fmt.Fprintf(w,"Hello Handler Function")
 }
 func main(){
 	fileServer := http.FileServer(http.Dir("./static"))
@@ -36,7 +36,7 @@ func main(){
 	http.HandleFunc("/hello",helloHandler)
 
 	fmt.Printf("Starting server at port 8080\n")
-	if err:= http.ListerAndServer(":8080",nil); err!=nil{
+	if err:= http.ListenAndServe(":8080",nil); err!=nil{
 		log.Fatal(err)
 	}
 }
